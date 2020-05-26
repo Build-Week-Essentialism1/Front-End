@@ -26,8 +26,8 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-      {/* <ValueList />
-      <CardComponent /> */}
+      <ValueList />
+      <CardComponent />
     </div>
   );
 }

@@ -7,22 +7,19 @@ import Dashboard from "./components/Dashboard";
 import ValueList from "./components/ValueList";
 import PrivateRoute from "./components/PrivateRoute";
 
-
-
 function App() {
   return (
     <Router>
-        <Switch>
+      <Switch>
         <Route exact path="/essentialism" component={Essentialism} />
         <Route exact path="/">
-            <LogIn />
-            <Register />
-     </Route> 
-    <Route exact path ="/dashboard" >
-            <Dashboard />
-           </Route>
-        </Switch>
-
+          <LogIn />
+          <Register />
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard />
+        </Route>
+      </Switch>
     </Router>
   );
 }
