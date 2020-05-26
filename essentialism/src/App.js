@@ -5,22 +5,24 @@ import Register from "./components/Register";
 import LogIn from "./components/LogIn";
 import Dashboard from "./components/Dashboard";
 import ValueList from "./components/ValueList";
+import PrivateRoute from "./components/PrivateRoute";
+
 
 
 function App() {
   return (
-     
     <Router>
         <Switch>
-        {/* <div>Essentialism</div> */}
         <Route exact path="/essentialism" component={Essentialism} />
         <Route exact path="/">
             <LogIn />
             <Register />
+     </Route> 
+    <Route exact path ="/dashboard" >
             <Dashboard />
-            <ValueList />
-          </Route> 
+           </Route>
         </Switch>
+
     </Router>
   );
 }

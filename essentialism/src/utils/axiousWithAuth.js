@@ -8,6 +8,8 @@ export const axiosWithAuth = () => {
     headers: {
       Authorization: token,
     },
-    baseURL: "http://localhost:3000",
+    baseURL: "https://localhost3000",
   });
 };
+
+// baseURL:"https://essentialismapi.herokuapp.com/api"

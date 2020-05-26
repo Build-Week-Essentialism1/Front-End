@@ -8,25 +8,14 @@ import CardComponent from "../components/CardComponent";
 function Essentialism() {
   const [value, setValue] = useState([]);
 
-  //dummy axios url
-  const url = "https://dog.ceo/api/breed/hound/images";
   const getValues = () => {
-    //eventuall I have to get the endpoint and get the values from there
-    // axiosWithAuth()
-    // .get("instert Endpoint here")
-    // .then((res)=>{
-    //     most likely going to be res.data
-    //     console.log(res)
-    //     setValue(res.data)
-    // })
-    axios
-      .get(url)
+    // eventuall I have to get the endpoint and get the values from there
+    axiosWithAuth()
+      .get("https://essentialismapi.herokuapp.com/api/values")
       .then((res) => {
-        console.log(res);
-        setValue(res.data.message);
-      })
-      .catch((err) => {
-        console.log(err);
+        // most likely going to be res.data
+        console.log(res.data);
+        setValue(res.data);
       });
   };
 
@@ -37,11 +26,8 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-      {/* {value.map((item) => (
-        <p> {item} </p>
-      ))} */}
-      <ValueList />
-      <CardComponent />
+      {/* <ValueList />
+      <CardComponent /> */}
     </div>
   );
 }
