@@ -1,27 +1,43 @@
 import React, { useState } from 'react'
 
-const initialFormValues = {
+const initialLogInValues = {
     username: '',
     password: ''
 }
 
-const initialFormErrors = {
+const initialLogInErrors = {
     username: '',
     password: ''
 }
 
 function LogIn() {
+
+    const [user, setUser] = useState({ username: "", password: "" });
+    
+    // Event Handlers
+    const handleChange = event => {
+        setUser({ ...user, [event.target.name]: event.target.value });
+    };
+
+    // onSubmit function
+    const handleSubmit = event => {
+        event.preventDefault();
+        console.log(user.name);
+        console.log(user.password);
+    };
+
     return (
         <div className="login">
-            <form>
+            <h1>Log In</h1>
+            <form onSubmit={handleSubmit}>
                  <div>
                     <label htmlFor="username">Username: </label>
                     <input
                         type="text"
                         name="username"
                         placeholder="username"
-                        // value=""
-                        // onChange=""
+                        value={user.username}
+                        onChange={handleChange}
                     />
                  </div>
 
@@ -31,11 +47,13 @@ function LogIn() {
                         type="text"
                         name="password"
                         placeholder="password"
-                    // value=""
-                    // onChange=""
+                        value={user.password}
+                        onChange={handleChange}
                     />
                 </div>
-                 
+                
+                <button>Submit</button>
+
             </form>
         </div>
     )
