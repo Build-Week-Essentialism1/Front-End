@@ -1,10 +1,7 @@
 const RegisterSubmit = (e) => {
   e.preventDefault();
   axiosWithAuth()
-    .post(
-      "https://essentialismapi.herokuapp.com/api/users/register",
-      credentials
-    )
+    .post("https://essentialismapi.herokuapp.com/api/users/register", user)
     .then((res) => {
       console.log(res);
       localStorage.setItem("token", res.data.payload);
@@ -15,7 +12,7 @@ const RegisterSubmit = (e) => {
 const LoginSubmit = (e) => {
   e.preventDefault();
   axiosWithAuth()
-    .post("https://essentialismapi.herokuapp.com/api/users/login", credentials)
+    .post("https://essentialismapi.herokuapp.com/api/users/login", user)
     .then((res) => {
       console.log(res);
       localStorage.setItem("token", res.data.payload);
