@@ -4,9 +4,13 @@ import Essentialism from "./components/Essentialism";
 import Register from "./components/Register";
 import Login from "./components/LogIn";
 
+
 function App() {
   return (
+     
     <Router>
+          <LogIn />
+          <Register />
       <Switch>
         {/* <div>Essentialism</div> */}
         <Route exact path="/essentialism" component={Essentialism} />
