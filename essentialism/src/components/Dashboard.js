@@ -1,9 +1,10 @@
 import React from 'react'
 import ValueList from './ValueList'
+import { useHistory } from 'react-router-dom'
 
 function Dashboard() {
 
-    const handleGoToValues = e => ( <ValueList />)
+    const { push } = useHistory();
         
   
     return (
@@ -17,9 +18,10 @@ function Dashboard() {
                 remember, whatever challenge you face in life,<br/>
                 If you don't prioritize yourself, someone else will.
             </p><br/>
-            {/* onCLick go to ValueList */}
-            <button className="toValues" onClick={() => handleGoToValues}>My Values List</button>
+            {/* onCLick go to ValueList plus Card */}
             
+            <button className="toValues" onClick={() => push("essentialism")}>Go To App</button>
+           
     </div>
     )
 }
