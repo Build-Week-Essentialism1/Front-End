@@ -1,3 +1,11 @@
+## Essentialism: The Perpetual pursuit of less but better!
+#### Today people are busy! But being busy does not always translate into efficient or effective productivity.
+#### Our Essentialism Application simply allows our users to identify and set values in order to determine what is uniquely essential them, and therefore eliminate everything else that is not!
+#### Our application's goal is to create a systemic routine for our users to make it as effortless as possible to prioritize what is most important to them, in that particular moment!
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
