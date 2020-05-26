@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Essentialism from "./components/Essentialism";
 import Register from "./components/Register";
 import Login from "./components/LogIn";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
