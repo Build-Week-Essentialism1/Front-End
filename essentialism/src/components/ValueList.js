@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// import axios and use endpoint to populate values 
 // box of suggestions 
 // add an input text where you can add to the values list.
 
