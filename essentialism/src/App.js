@@ -1,8 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Essentialism from "./components/Essentialism";
-import LogIn from "./components/LogIn";
 import Register from "./components/Register";
+import Login from "./components/LogIn";
+
+
 function App() {
   return (
      
@@ -12,6 +14,7 @@ function App() {
       <Switch>
         {/* <div>Essentialism</div> */}
         <Route exact path="/essentialism" component={Essentialism} />
+        <Route exact path="/" component={(Login, Register)} />
       </Switch>
     </Router>
   );

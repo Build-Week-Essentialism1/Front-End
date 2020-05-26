@@ -6,9 +6,9 @@ const RegisterSubmit = (e) => {
       credentials
     )
     .then((res) => {
-      // console.log(res);
+      console.log(res);
       localStorage.setItem("token", res.data.payload);
-      push("/essetialism");
+      push("/");
     });
 };
 
@@ -17,7 +17,7 @@ const LoginSubmit = (e) => {
   axiosWithAuth()
     .post("https://essentialismapi.herokuapp.com/api/users/login", credentials)
     .then((res) => {
-      // console.log(res);
+      console.log(res);
       localStorage.setItem("token", res.data.payload);
       push("/essetialism");
     });
