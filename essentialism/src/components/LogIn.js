@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import * as yup from "yup";
 
 const initialLogInValues = {
     username: '',
@@ -12,7 +13,8 @@ const initialLogInErrors = {
 
 function LogIn() {
 
-    const [user, setUser] = useState({ username: "", password: "" });
+
+    const [user, setUser] = useState(initialLogInValues);
     
     // Event Handlers
     const handleChange = event => {
