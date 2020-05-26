@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
+import { useHistory } from "react-router-dom";
 
 const initialLogInValues = {
   username: "",
@@ -13,6 +14,7 @@ const initialLogInErrors = {
 
 function LogIn() {
   const [user, setUser] = useState({ username: "", password: "" });
+  const { push } = useHistory();
 
   // Event Handlers
   const handleChange = (event) => {
@@ -31,8 +33,8 @@ function LogIn() {
       .post("https://essentialismapi.herokuapp.com/api/users/login", user)
       .then((res) => {
         console.log(res);
-        // localStorage.setItem("token", res.data.payload);
-        // push("/essetialism");
+        localStorage.setItem("token", res.data.token);
+        push("/essentialism");
       });
   };
 

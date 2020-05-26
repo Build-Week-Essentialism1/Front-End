@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
+import { useHistory } from "react-router-dom";
 
 const initialRegisterValues = {
   username: "",
@@ -15,6 +16,7 @@ const initialRegisterErrors = {
 
 function Register() {
   const [user, setUser] = useState(initialRegisterValues);
+  const { push } = useHistory();
 
   // Event Handlers
   const handleChange = (event) => {
@@ -31,12 +33,13 @@ function Register() {
 
   const RegisterSubmit = (e) => {
     e.preventDefault();
+    console.log(user);
     axiosWithAuth()
-      .post("/users/register", user)
+      .post("https://essentialismapi.herokuapp.com/api/users/register", user)
       .then((res) => {
         console.log(res);
         // localStorage.setItem("token", res.data.payload);
-        // push("/");
+        push("/");
       })
       .catch((err) => {
         console.log(err, "This is the error");

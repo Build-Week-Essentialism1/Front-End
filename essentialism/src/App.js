@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/essentialism" component={Essentialism} />
+        <PrivateRoute exact path="/essentialism" component={Essentialism} />
         <Route exact path="/">
           <LogIn />
           <Register />
