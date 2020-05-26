@@ -11,3 +11,5 @@ export const axiosWithAuth = () => {
     baseURL: "http://localhost:3000",
   });
 };
+
+// baseURL:"https://essentialismapi.herokuapp.com/api"

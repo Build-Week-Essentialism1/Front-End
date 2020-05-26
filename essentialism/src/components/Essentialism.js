@@ -37,9 +37,6 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-      {/* {value.map((item) => (
-        <p> {item} </p>
-      ))} */}
       <ValueList />
       <CardComponent />
     </div>
