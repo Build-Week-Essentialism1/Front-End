@@ -1,30 +1,22 @@
+
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-// box of suggestions 
+import { EssentialismContext } from "./Essentialism";
+// import axios and use endpoint to populate values
+// box of suggestions
 // add an input text where you can add to the values list.
 
-// const dummyValues = [
-//   { 
-//     "id": 0,
-//     "name": "Design space in your life to escape"
-//   },
-//   {
-//     "id": 1, 
-//     "name": "Realize you have a choice"
-//   },
-//   { 
-//     "id": 2,
-//     "name": "Spend time exploring"
-//   }, 
-//   { 
-//     "id": 3, 
-//     "name": "Define your purpose"
-//   },
-//   {
-//     "id": 4, 
-//     "name": "Focus on the vital few"
-//   },
-// ]
+const value = useContext(EssentialismContext);
+
+
+function ValueList() {
+  const [value, setValue] = useState({
+    item: "",
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
 
 function ValueList(props) {
   const [ value, setValue ] =useState({
@@ -37,16 +29,15 @@ function ValueList(props) {
     event.preventDefault();
  }
   
-
   // handleChange
-  const handleChange = event => {
+  const handleChange = (event) => {
     setValue({ ...value, [event.target.name]: event.target.value });
   };
-
 
   return (
     <div>
       <h2>Values to Focus On</h2>
+
         <form onSubmit={handleSubmit}>
           <input 
             type="text"
@@ -69,7 +60,7 @@ function ValueList(props) {
         )})}
       </ul>
     </div>
-  )
+  );
 }
 
 export default ValueList;

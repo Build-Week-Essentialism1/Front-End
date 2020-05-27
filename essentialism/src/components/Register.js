@@ -27,7 +27,6 @@ function Register() {
   };
 
 
-
   const RegisterSubmit = (e) => {
     e.preventDefault();
     console.log(user);
