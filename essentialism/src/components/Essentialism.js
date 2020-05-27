@@ -4,7 +4,7 @@ import { axiosWithAuth } from "../utils/axiousWithAuth";
 import ValueList from "../components/ValueList";
 import CardComponent from "../components/CardComponent";
 
-const EssentialismContext = createContext();
+// const EssentialismContext = createContext();
 
 function Essentialism() {
   const [value, setValue] = useState([]);
@@ -14,7 +14,7 @@ function Essentialism() {
     axiosWithAuth()
       .get("https://essentialismapi.herokuapp.com/api/values")
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         setValue(res.data);
       });
   };
@@ -26,10 +26,10 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-      <EssentialismContext.Provider value={value}>
+      {/* <EssentialismContext.Provider value={value}> */}
         <ValueList value={value} />
         <CardComponent />
-      </EssentialismContext.Provider>
+      {/* </EssentialismContext.Provider> */}
 
     </div>
   );
