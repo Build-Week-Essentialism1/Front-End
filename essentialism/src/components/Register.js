@@ -2,7 +2,29 @@ import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
+import styled from "styled-components";
+import { Button, Form, FormGroup } from 'reactstrap';
 
+const Wrapper = styled.div`
+   background-color: rgba(229,35,31,0.8);
+  border: 0.5px solid black;
+  color: #000000;
+  border-radius: 10px;
+  display: flex;
+  margin: 1em 2em;
+  align-content: center;
+  justify-content: space-around;
+`;
+
+// const Button = styled.button`
+//   background-color: gray;
+//   color: #000000;
+//   border-radius: 5px;
+//   display: flex;
+//   margin-left: 3em;
+//   align-content: center;
+//   justify-content: space-around;
+// `;
 const initialRegisterValues = {
   username: "",
   password: "",
@@ -91,11 +113,14 @@ function Register() {
   };
 
   return (
+    <Wrapper>
     <div className="register">
-      <h1>Register</h1>
-      <form onSubmit={RegisterSubmit}>
-        <div>
-          <label htmlFor="username">Username: </label>
+      
+      <h1>Essentialism</h1>
+      <h2>Do More, With Less</h2>
+      <Form onSubmit={RegisterSubmit}>
+        <FormGroup>
+          <label htmlFor="username"></label>
           <input
             type="text"
             name="username"
@@ -104,10 +129,10 @@ function Register() {
             onChange={handleSignChange}
             required
           />
-        </div>
+        </FormGroup>
 
-        <div>
-          <label htmlFor="password">Password: </label>
+        <FormGroup>
+          <label htmlFor="password"></label>
           <input
             type="password"
             name="password"
@@ -116,10 +141,10 @@ function Register() {
             onChange={handleSignChange}
             required
           />
-        </div>
+        </FormGroup>
 
-        <div>
-          <label htmlFor="email">Email: </label>
+        <FormGroup>
+          <label htmlFor="email"></label>
           <input
             type="email"
             name="email"
@@ -127,10 +152,12 @@ function Register() {
             value={newUser.email}
             onChange={handleSignChange}
           />
-        </div>
-
-        <button onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</button>      </form>
+        </FormGroup>
+         <Button outline color="secondary" className="submit-btn mb-2 ml-5" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
+        </Form>
+      
     </div>
+  </Wrapper>
   );
 }
 
