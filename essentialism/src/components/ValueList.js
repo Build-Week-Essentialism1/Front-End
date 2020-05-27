@@ -1,25 +1,52 @@
-import React, { useState } from "react";
-// import axios and use endpoint to populate values 
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 // box of suggestions 
 // add an input text where you can add to the values list.
 
-const dummyValues = [
-  "Design space in your life to escape", "Realize you have a choice", 
-  "Spend time exploring", "Define your purpose", "Focus on the vital few",
-  "Move from Motion Sickness to Momentum", "Be the Chief Editing Officer (CEO)",
-  "Say NO more", "Sleep more","Do it all over again(and again)"
-]
+// const dummyValues = [
+//   { 
+//     "id": 0,
+//     "name": "Design space in your life to escape"
+//   },
+//   {
+//     "id": 1, 
+//     "name": "Realize you have a choice"
+//   },
+//   { 
+//     "id": 2,
+//     "name": "Spend time exploring"
+//   }, 
+//   { 
+//     "id": 3, 
+//     "name": "Define your purpose"
+//   },
+//   {
+//     "id": 4, 
+//     "name": "Focus on the vital few"
+//   },
+// ]
 
-function ValueList() {
+function ValueList(props) {
   const [ value, setValue ] =useState({
     item: ""
   })
 
-  const handleSubmit = event => {
+  const [essentials, setEssentials] = useState([])
+
+ const handleSubmit = event => {
     event.preventDefault();
+ }
 
-  }
-
+  // useEffect(() => {
+  //   axios
+  //     .get('https://essentialismapi.herokuapp.com/api/values')
+  //     // .get("https://essentialismapi.herokuapp.com/api/values")
+  //     .then(res => {
+  //       console.log(res);
+  //       setEssentials(res.data)
+  //     });
+  //   }, [])
+  
 
   // handleChange
   const handleChange = event => {
@@ -40,16 +67,17 @@ function ValueList() {
             />
             <button>Add New Value</button>
         </form>
-
-      { dummyValues.map(value => {
-        return <ul>
-          <li>{value}</li>
-          <button>+</button>
-          <button>Edit</button>
-          <button> X </button>
-        </ul>
-      })}
-
+      <ul>
+        {props.value.map(value => {
+          return (
+          <li key={value.id}>
+            <span>{value.name}</span>
+            <button>+</button>
+            <button>Edit</button>
+            <button> X </button>
+          </li>
+        )})}
+      </ul>
     </div>
   )
 }
