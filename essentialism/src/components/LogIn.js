@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
@@ -13,9 +13,53 @@ const initialLogInErrors = {
   password: "",
 };
 
+
+const formSchema = yup.object({
+  username: yup
+    .string()
+    .min(3, "Username must be at least three characters long")
+    .required("Username is required"),
+  password: yup
+    .string()
+    .min(6, "Password must be at least six characters long")
+    .required("Password is required")
+})
+
 function LogIn() {
   const [user, setUser] = useState(initialLogInValues);
+  const [formErrors, setFormErrors] = useState(initialLogInErrors)
+  const [formState, setFormState] = useState(initialLogInValues)
+  const [ buttonDisabled, setButtonDisabled] = useState(true)
+
   const { push } = useHistory();
+
+  // form validation useEffect
+  useEffect(() => {
+    formSchema.isValid(formState).then(valid => {
+      setButtonDisabled(!valid)
+    });
+  }, [formState]);
+
+  // validation function
+
+  const validateChange = e => {
+    yup
+      .reach(formSchema, e.target.name)
+      .validate(e.target.value)
+      .then(valid => {
+        setFormErrors({
+          ...formErrors,
+          [e.target.name]: ""
+        });
+
+      })
+      .catch(err => {
+        setFormErrors({
+          ...formErrors,
+          [e.target.name]: err.errors[0]
+        });
+      });
+  }
 
   // Event Handlers
   const handleChange = (event) => {
@@ -30,7 +74,12 @@ function LogIn() {
         console.log(res);
         localStorage.setItem("token", res.data.token);
         push("/dashboard");
-      });
+        setUser(user.concat(res.data));
+        console.log("success", user);
+
+        setFormState(initialLogInValues);
+      })
+      .catch(err => console.log(err.response));
   };
   return (
     <div className="login">

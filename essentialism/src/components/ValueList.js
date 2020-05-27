@@ -36,16 +36,6 @@ function ValueList(props) {
  const handleSubmit = event => {
     event.preventDefault();
  }
-
-  // useEffect(() => {
-  //   axios
-  //     .get('https://essentialismapi.herokuapp.com/api/values')
-  //     // .get("https://essentialismapi.herokuapp.com/api/values")
-  //     .then(res => {
-  //       console.log(res);
-  //       setEssentials(res.data)
-  //     });
-  //   }, [])
   
 
   // handleChange
