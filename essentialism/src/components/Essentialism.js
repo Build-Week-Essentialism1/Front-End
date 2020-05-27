@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import ValueList from "../components/ValueList";
@@ -7,6 +7,8 @@ import CardComponent from "../components/CardComponent";
 //I will return the two parts of the application here
 function Essentialism() {
   const [value, setValue] = useState([]);
+
+  const EssentialismContext = createContext();
 
   const getValues = () => {
     // eventuall I have to get the endpoint and get the values from there
@@ -26,9 +28,10 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-       <ValueList value={value}/>
-      <CardComponent /> 
-
+      <EssentialismContext.Provider value={value}>
+        <ValueList value={value} />
+        <CardComponent />
+      </EssentialismContext.Provider>
     </div>
   );
 }
