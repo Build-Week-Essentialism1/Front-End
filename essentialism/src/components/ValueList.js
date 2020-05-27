@@ -21,6 +21,19 @@ function ValueList(props) {
 
   const prioritize = id => event => {
     setPrioritizedValues(prioritizedValues.concat(id))
+
+
+    // needs user id interperlated at the end for post request to occur
+
+    axiosWithAuth()
+      .post(`https://essentialismapi.herokuapp.com/api/uv/:id`, prioritizedValues)
+      .then((res) => {
+        console.log(res);
+        history.go(0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const handleSubmit = (event) => {
@@ -31,6 +44,8 @@ function ValueList(props) {
     setValue({ ...value, item: event.target.value });
   };
   const history = useHistory();
+
+
   //add button
   const Add = (e) => {
     // e.preventDefault();
@@ -49,7 +64,6 @@ function ValueList(props) {
       });
   };
 
-  
 
   return (
     <div>
@@ -65,6 +79,8 @@ function ValueList(props) {
         <button onClick={() => Add()}>Add New Value</button>
       </form>
       <ul>
+
+
         {props.value.map((value) => {
           return (
             <li key={value.id}>
