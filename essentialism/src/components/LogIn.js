@@ -26,34 +26,46 @@ const formSchema = yup.object({
 })
 
 function LogIn() {
+  // login state
   const [user, setUser] = useState(initialLogInValues);
+  // error state
   const [formErrors, setFormErrors] = useState(initialLogInErrors)
-  const [formState, setFormState] = useState(initialLogInValues)
+  // const [formState, setFormState] = useState(initialLogInValues)
   const [ buttonDisabled, setButtonDisabled] = useState(true)
 
   const { push } = useHistory();
 
-  // form validation useEffect
-  useEffect(() => {
-    formSchema.isValid(formState).then(valid => {
-      setButtonDisabled(!valid)
-    });
-  }, [formState]);
+ 
+
+  //handle changes on login form
+  const inputChange = e => {
+    e.persist();
+    const newFormData = {
+      ...user,
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checkbox :
+          e.target.value
+    };
+    validateChange(e);
+    setUser(newFormData)
+  };
+
 
   // validation function
 
   const validateChange = e => {
     yup
       .reach(formSchema, e.target.name)
-      .validate(e.target.value)
+      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)      
       .then(valid => {
         setFormErrors({
           ...formErrors,
           [e.target.name]: ""
         });
-
+        
       })
       .catch(err => {
+        console.log("Validate", err)
         setFormErrors({
           ...formErrors,
           [e.target.name]: err.errors[0]
@@ -61,12 +73,7 @@ function LogIn() {
       });
   }
 
-  // Event Handlers
-  const handleChange = (event) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
-
-  const LoginSubmit = (e) => {
+  const LoginSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
       .post("https://essentialismapi.herokuapp.com/api/users/login", user)
@@ -74,13 +81,26 @@ function LogIn() {
         console.log(res);
         localStorage.setItem("token", res.data.token);
         push("/dashboard");
-        setUser(user.concat(res.data));
+        setUser({
+          username:"",
+          password:""
+        });
         console.log("success", user);
 
-        setFormState(initialLogInValues);
+        setUser(initialLogInValues);
       })
       .catch(err => console.log(err.response));
   };
+
+  // form validation useEffect
+  useEffect(() => {
+    formSchema.isValid(user).then(valid => {
+      setButtonDisabled(!valid)
+    });
+  }, [user]);
+
+
+
   return (
     <div className="login">
       <h1>Log In</h1>
@@ -92,7 +112,7 @@ function LogIn() {
             name="username"
             placeholder="username"
             value={user.username}
-            onChange={handleChange}
+            onChange={inputChange}
           />
         </div>
 
@@ -103,11 +123,12 @@ function LogIn() {
             name="password"
             placeholder="password"
             value={user.password}
-            onChange={handleChange}
+            onChange={inputChange}
           />
         </div>
 
-        <button>Submit</button>
+        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+        <button disabled={buttonDisabled}>Submit</button>
       </form>
     </div>
   );

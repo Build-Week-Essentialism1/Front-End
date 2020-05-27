@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
@@ -15,30 +15,78 @@ const initialRegisterErrors = {
   email: "",
 };
 
+const formSchema = yup.object().shape({
+  username: yup.string().required("Please enter your name"),
+  email: yup.string().email().required("Please enter a valid email"),
+  password: yup.string().min(6).required("Enter a secure passcode"),
+})
 
 
 function Register() {
-  const [user, setUser] = useState(initialRegisterValues);
+  const [newUser, setNewUser] = useState(initialRegisterValues);
+  const [errors, setErrors] = useState(initialRegisterErrors);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  
   const { push } = useHistory();
 
-  // Event Handlers
-  const handleChange = (event) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
+  // Begin validation
+
+  //handles changes on sign up form
+  const handleSignChange = e => {
+    e.persist()
+    setNewUser({
+
+      ...newUser,
+      [e.target.name]: e.target.value
+
+    })
+    validateSignChange(e)
+  }
+ 
+  const validateSignChange = e => {
+    yup
+      .reach(formSchema, e.target.name)
+      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)
+      .then(valid => {
+
+        setErrors({
+
+          ...errors,
+          [e.target.name]: ""
+
+        });
+        console.log(errors)
+      })
+      .catch(err => {
+        console.log("Validate", err)
+        setErrors({
+          ...errors,
+          [e.target.name]: err.errors[0]
+        })
+      })
+  }
+
+  //checks validity
+  useEffect(() => {
+    formSchema.isValid(newUser).then(valid => {
+      setButtonDisabled(!valid);
+    })
+  }, [newUser]);
 
 
   const RegisterSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
     axiosWithAuth()
-      .post("https://essentialismapi.herokuapp.com/api/users/register", user)
+      .post("https://essentialismapi.herokuapp.com/api/users/register", newUser)
       .then((res) => {
         console.log(res);
+        alert("Success!")
         // localStorage.setItem("token", res.data.payload);
         push("/");
       })
       .catch((err) => {
         console.log(err, "This is the error");
+        alert("Sorry, please enter valid credentials")
       });
   };
 
@@ -52,8 +100,8 @@ function Register() {
             type="text"
             name="username"
             placeholder="username"
-            value={user.username}
-            onChange={handleChange}
+            value={newUser.username}
+            onChange={handleSignChange}
             required
           />
         </div>
@@ -64,8 +112,8 @@ function Register() {
             type="password"
             name="password"
             placeholder="password"
-            value={user.password}
-            onChange={handleChange}
+            value={newUser.password}
+            onChange={handleSignChange}
             required
           />
         </div>
@@ -76,13 +124,12 @@ function Register() {
             type="email"
             name="email"
             placeholder="email"
-            value={user.email}
-            onChange={handleChange}
+            value={newUser.email}
+            onChange={handleSignChange}
           />
         </div>
 
-        <button>Submit</button>
-      </form>
+        <button onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</button>      </form>
     </div>
   );
 }
