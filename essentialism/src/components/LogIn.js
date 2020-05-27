@@ -26,34 +26,42 @@ const formSchema = yup.object({
 })
 
 function LogIn() {
+  // login state
   const [user, setUser] = useState(initialLogInValues);
+  // error state
   const [formErrors, setFormErrors] = useState(initialLogInErrors)
-  const [formState, setFormState] = useState(initialLogInValues)
+  // const [formState, setFormState] = useState(initialLogInValues)
   const [ buttonDisabled, setButtonDisabled] = useState(true)
 
   const { push } = useHistory();
 
-  // form validation useEffect
-  useEffect(() => {
-    formSchema.isValid(formState).then(valid => {
-      setButtonDisabled(!valid)
-    });
-  }, [formState]);
+ 
+
+  //handle changes on login form
+  const handleChange = event => {
+    event.persist()
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value
+    })
+  }
+
 
   // validation function
 
   const validateChange = e => {
     yup
       .reach(formSchema, e.target.name)
-      .validate(e.target.value)
+      .validate(event.target.type === "checkbox" ? event.target.checked : event.target.value)      
       .then(valid => {
         setFormErrors({
           ...formErrors,
           [e.target.name]: ""
         });
-
+        console.log(error)
       })
       .catch(err => {
+        console.log("Validate", err)
         setFormErrors({
           ...formErrors,
           [e.target.name]: err.errors[0]
@@ -74,13 +82,26 @@ function LogIn() {
         console.log(res);
         localStorage.setItem("token", res.data.token);
         push("/dashboard");
-        setUser(user.concat(res.data));
+        setUser({
+          username:"",
+          pa
+        });
         console.log("success", user);
 
         setFormState(initialLogInValues);
       })
       .catch(err => console.log(err.response));
   };
+
+  // form validation useEffect
+  useEffect(() => {
+    formSchema.isValid(user).then(valid => {
+      setButtonDisabled(!valid)
+    });
+  }, [user]);
+
+
+
   return (
     <div className="login">
       <h1>Log In</h1>
