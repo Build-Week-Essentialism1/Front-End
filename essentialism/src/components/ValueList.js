@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { EssentialismContext } from "./Essentialism";
+// import { EssentialismContext } from "./Essentialism";
 // import axios and use endpoint to populate values
 // box of suggestions
 // add an input text where you can add to the values list.
 
-const value = useContext(EssentialismContext);
+// const value = useContext(EssentialismContext);
 
 
 function ValueList() {
@@ -61,6 +61,7 @@ function ValueList(props) {
       </ul>
     </div>
   );
+}
 }
 
 export default ValueList;

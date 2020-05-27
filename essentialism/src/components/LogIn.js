@@ -38,13 +38,17 @@ function LogIn() {
  
 
   //handle changes on login form
-  const handleChange = event => {
-    event.persist()
-    setUser({
+  const inputChange = e => {
+    e.persist();
+    const newFormData = {
       ...user,
-      [event.target.name]: event.target.value
-    })
-  }
+      [e.target.name]:
+        e.target.type === "checkbox" ? e.target.checkbox :
+          e.target.value
+    };
+    validateChange(e);
+    setUser(newFormData)
+  };
 
 
   // validation function
@@ -52,13 +56,13 @@ function LogIn() {
   const validateChange = e => {
     yup
       .reach(formSchema, e.target.name)
-      .validate(event.target.type === "checkbox" ? event.target.checked : event.target.value)      
+      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)      
       .then(valid => {
         setFormErrors({
           ...formErrors,
           [e.target.name]: ""
         });
-        console.log(error)
+        
       })
       .catch(err => {
         console.log("Validate", err)
@@ -69,12 +73,7 @@ function LogIn() {
       });
   }
 
-  // Event Handlers
-  const handleChange = (event) => {
-    setUser({ ...user, [event.target.name]: event.target.value });
-  };
-
-  const LoginSubmit = (e) => {
+  const LoginSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
       .post("https://essentialismapi.herokuapp.com/api/users/login", user)
@@ -84,11 +83,11 @@ function LogIn() {
         push("/dashboard");
         setUser({
           username:"",
-          pa
+          password:""
         });
         console.log("success", user);
 
-        setFormState(initialLogInValues);
+        setUser(initialLogInValues);
       })
       .catch(err => console.log(err.response));
   };
@@ -113,7 +112,7 @@ function LogIn() {
             name="username"
             placeholder="username"
             value={user.username}
-            onChange={handleChange}
+            onChange={inputChange}
           />
         </div>
 
@@ -124,11 +123,12 @@ function LogIn() {
             name="password"
             placeholder="password"
             value={user.password}
-            onChange={handleChange}
+            onChange={inputChange}
           />
         </div>
 
-        <button>Submit</button>
+        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+        <button disabled={buttonDisabled}>Submit</button>
       </form>
     </div>
   );
