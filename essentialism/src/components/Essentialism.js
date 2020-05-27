@@ -27,9 +27,10 @@ function Essentialism() {
     <div>
       Actuall App
       <EssentialismContext.Provider value={value}>
-        <ValueList />
+        <ValueList value={value} />
         <CardComponent />
       </EssentialismContext.Provider>
+
     </div>
   );
 }

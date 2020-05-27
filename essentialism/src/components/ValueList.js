@@ -1,4 +1,6 @@
-import React, { useState, useContext } from "react";
+
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import { EssentialismContext } from "./Essentialism";
 // import axios and use endpoint to populate values
 // box of suggestions
@@ -6,18 +8,6 @@ import { EssentialismContext } from "./Essentialism";
 
 const value = useContext(EssentialismContext);
 
-const dummyValues = [
-  "Design space in your life to escape",
-  "Realize you have a choice",
-  "Spend time exploring",
-  "Define your purpose",
-  "Focus on the vital few",
-  "Move from Motion Sickness to Momentum",
-  "Be the Chief Editing Officer (CEO)",
-  "Say NO more",
-  "Sleep more",
-  "Do it all over again(and again)",
-];
 
 function ValueList() {
   const [value, setValue] = useState({
@@ -28,6 +18,17 @@ function ValueList() {
     event.preventDefault();
   };
 
+function ValueList(props) {
+  const [ value, setValue ] =useState({
+    item: ""
+  })
+
+  const [essentials, setEssentials] = useState([])
+
+ const handleSubmit = event => {
+    event.preventDefault();
+ }
+  
   // handleChange
   const handleChange = (event) => {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -36,27 +37,28 @@ function ValueList() {
   return (
     <div>
       <h2>Values to Focus On</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Add a Value"
-          name="value"
-          onChange={handleChange}
-          value={value.item}
-        />
-        <button>Add New Value</button>
-      </form>
 
-      {dummyValues.map((value) => {
-        return (
-          <ul>
-            <li>{value}</li>
+        <form onSubmit={handleSubmit}>
+          <input 
+            type="text"
+            placeholder="Add a Value"
+            name="value"
+            onChange={handleChange}
+            value={value.item}
+            />
+            <button>Add New Value</button>
+        </form>
+      <ul>
+        {props.value.map(value => {
+          return (
+          <li key={value.id}>
+            <span>{value.name}</span>
             <button>+</button>
             <button>Edit</button>
             <button> X </button>
-          </ul>
-        );
-      })}
+          </li>
+        )})}
+      </ul>
     </div>
   );
 }

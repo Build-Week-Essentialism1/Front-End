@@ -25,6 +25,7 @@ function Dashboard() {
       <button className="toValues" onClick={() => push("essentialism")}>
         Go To App
       </button>
+
     </div>
   );
 }

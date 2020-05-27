@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
+import * as yup from "yup";
 
 const initialRegisterValues = {
   username: "",
@@ -14,6 +15,8 @@ const initialRegisterErrors = {
   email: "",
 };
 
+
+
 function Register() {
   const [user, setUser] = useState(initialRegisterValues);
   const { push } = useHistory();
@@ -22,6 +25,7 @@ function Register() {
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
+
 
   const RegisterSubmit = (e) => {
     e.preventDefault();
