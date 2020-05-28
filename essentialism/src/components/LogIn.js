@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { userLogin } from "../actions/LoginAction";
 
 const initialLogInValues = {
   username: "",
@@ -13,7 +15,6 @@ const initialLogInErrors = {
   password: "",
 };
 
-
 const formSchema = yup.object({
   username: yup
     .string()
@@ -22,69 +23,79 @@ const formSchema = yup.object({
   password: yup
     .string()
     .min(6, "Password must be at least six characters long")
-    .required("Password is required")
-})
+    .required("Password is required"),
+});
 
-function LogIn() {
-  const [user, setUser] = useState(initialLogInValues);
-  const [formErrors, setFormErrors] = useState(initialLogInErrors)
-  const [formState, setFormState] = useState(initialLogInValues)
-  const [ buttonDisabled, setButtonDisabled] = useState(true)
+function LogIn(props) {
+  const [user, setUser] = useState({
+    username: props.user.username,
+    password: props.user.username,
+  });
+  const [formErrors, setFormErrors] = useState(initialLogInErrors);
+  const [formState, setFormState] = useState(initialLogInValues);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const { push } = useHistory();
 
   // form validation useEffect
   useEffect(() => {
-    formSchema.isValid(formState).then(valid => {
-      setButtonDisabled(!valid)
+    formSchema.isValid(formState).then((valid) => {
+      setButtonDisabled(!valid);
     });
   }, [formState]);
 
   // validation function
 
-  const validateChange = e => {
+  const validateChange = (e) => {
     yup
       .reach(formSchema, e.target.name)
       .validate(e.target.value)
-      .then(valid => {
+      .then((valid) => {
         setFormErrors({
           ...formErrors,
-          [e.target.name]: ""
+          [e.target.name]: "",
         });
-
       })
-      .catch(err => {
+      .catch((err) => {
         setFormErrors({
           ...formErrors,
-          [e.target.name]: err.errors[0]
+          [e.target.name]: err.errors[0],
         });
       });
-  }
+  };
 
   // Event Handlers
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  const LoginSubmit = (e) => {
-    e.preventDefault();
-    axiosWithAuth()
-      .post("https://essentialismapi.herokuapp.com/api/users/login", user)
-      .then((res) => {
-        console.log(res);
-        localStorage.setItem("token", res.data.token);
-        push("/dashboard");
-        setUser(user.concat(res.data));
-        console.log("success", user);
+  // const LoginSubmit = (e) => {
+  //   e.preventDefault();
+  // axiosWithAuth()
+  //   .post("https://essentialismapi.herokuapp.com/api/users/login", user)
+  //   .then((res) => {
+  //     console.log(res.data);
+  // localStorage.setItem("token", res.data.token);
+  // props.userLogin(user);
+  // push("/dashboard")
+  // setUser(res.data);
+  // console.log("success", user);
+  // setFormState(initialLogInValues);
 
-        setFormState(initialLogInValues);
-      })
-      .catch(err => console.log(err.response));
-  };
+  // })
+
+  // .catch((err) => console.log(err, "It went wrong"));
+  // };
   return (
     <div className="login">
       <h1>Log In</h1>
-      <form onSubmit={LoginSubmit}>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          props.userLogin(user);
+          push("/dashboard");
+        }}
+      >
         <div>
           <label htmlFor="username">Username: </label>
           <input
@@ -113,4 +124,11 @@ function LogIn() {
   );
 }
 
-export default LogIn;
+const mapStateToProps = (state) => {
+  console.log({ state });
+  return {
+    user: state,
+  };
+};
+
+export default connect(mapStateToProps, { userLogin })(LogIn);
