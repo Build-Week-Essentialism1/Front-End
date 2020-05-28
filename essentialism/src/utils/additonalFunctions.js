@@ -14,7 +14,7 @@ const [editing, setEditing] = useState(false);
 
 const editValue = (value) => {
   setEditing(true);
-  setColorToEdit(value);
+  setValueToToEdit(value);
 };
 
 const onSubmit = (e) => {
