@@ -2,6 +2,19 @@ import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
+import { Button, Form, FormGroup, } from 'reactstrap';
+
+const Wrapper = styled.div`
+  background-color: #e9e9e9;
+  border: 0.5px solid black;
+  color: #000000;
+  border-radius: 10px;
+  display: flex;
+  margin: 1em 2em;
+  align-content: center;
+  justify-content: space-around;
+`;
 
 const initialLogInValues = {
   username: "",
@@ -102,11 +115,13 @@ function LogIn() {
 
 
   return (
+    <Wrapper>
     <div className="login">
-      <h1>Log In</h1>
-      <form onSubmit={LoginSubmit}>
-        <div>
-          <label htmlFor="username">Username: </label>
+      <h1 className="login-title">Essentialism</h1>
+      <h2 className="login-subtitle text-left ml-1"><em>Do More, With Less</em></h2>
+      <Form onSubmit={LoginSubmit}>
+        <FormGroup>
+          <label htmlFor="username"></label>
           <input
             type="text"
             name="username"
@@ -114,23 +129,24 @@ function LogIn() {
             value={user.username}
             onChange={inputChange}
           />
-        </div>
+        </FormGroup>
 
-        <div>
-          <label htmlFor="password">Password: </label>
+        <FormGroup>
+          <label htmlFor="password"></label>
           <input
-            type="text"
+            type="password"
             name="password"
             placeholder="password"
             value={user.password}
             onChange={inputChange}
           />
-        </div>
+        </FormGroup>
 
         {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
-        <button disabled={buttonDisabled}>Submit</button>
-      </form>
+         <Button outline color="danger" className="btn btn-block mb-3" onClick={() => { push('/') }} disabled={buttonDisabled}>Log In</Button>
+      </Form>
     </div>
+    </Wrapper>
   );
 }
 
