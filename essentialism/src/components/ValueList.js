@@ -43,14 +43,13 @@ function ValueList(props) {
   // prioritized function
 
   const prioritize = (id) => (event) => {
-    setPrioritizedValues(prioritizedValues.concat(id));
+    // setPrioritizedValues(prioritizedValues.concat(id));
 
     // needs user id interperlated at the end for post request to occur
 
     axiosWithAuth()
       .post(
-        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`,
-        prioritizedValues
+        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`, prioritizedValues
       )
       .then((res) => {
         console.log(res);

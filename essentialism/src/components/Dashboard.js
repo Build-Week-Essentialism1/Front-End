@@ -1,33 +1,43 @@
 import React from "react";
 import ValueList from "./ValueList";
 import { useHistory } from "react-router-dom";
+import { Jumbotron, Button} from "reactstrap";
+import './App.css'
+import ReactPlayer from 'react-player';
 
 function Dashboard() {
   const { push } = useHistory();
 
   return (
-    <div>
-      <h1>Essentialism</h1>
-      <header className="avatarImgs">
-        <img src="img_avatar.png" alt="Avatar" class="avatar" />
-        <img src="assets/img_avatar2.png" alt="Avatar" class="avatar" />
-      </header>
-      <p>
-        If there's one thing you should take from this app,
-        <br />
+    <div className="text-center">
+      <Jumbotron className="mb-0">
+       <img id="logoImg" src="https://www.verbaltovisual.com/wp-content/uploads/2018/11/Essentialism_Featured_2-1050x591.jpg" alt="Essentialism logo" className="img-fluid rounded" />
+       <h2 className="display-8 py-5">
+        <em>"If there's one thing you should take from this app,
+      
         remember, whatever challenge you face in life,
-        <br />
-        If you don't prioritize yourself, someone else will.
-      </p>
+       
+        if you don't prioritize yourself, someone else will."
+        </em>
+      </h2>
+      <h4><cite>-Greg McKeown</cite></h4>
       <br />
+
+      <ReactPlayer className="mx-auto img-fluid"
+        url="https://youtu.be/eDBYci4Vy2k" 
+        />
+     
       {/* onCLick go to ValueList plus Card */}
 
-      <button className="toValues" onClick={() => push("essentialism")}>
+      <Button outline color="primary" className="btn btn-lg text-center mt-5" onClick={() => push("essentialism")}>
         Go To App
-      </button>
-
+      </Button>
+    </Jumbotron>
     </div>
   );
 }
 
 export default Dashboard;
+
+
+// <iframe width="882" height="496" src="https://www.youtube.com/embed/eDBYci4Vy2k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
