@@ -154,7 +154,7 @@ function Register() {
             onChange={handleSignChange}
           />
         </FormGroup>
-         <Button outline color="danger" className="btn btn-block mb-3" onClick={() => { push('/') }} disabled={buttonDisabled}>Register</Button>
+         <Button outline color="danger" className="btn btn-block mb-3" disabled={buttonDisabled}>Register</Button>
         </Form>
       
     </div>

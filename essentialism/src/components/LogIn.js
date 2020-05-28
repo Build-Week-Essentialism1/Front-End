@@ -143,7 +143,7 @@ function LogIn() {
         </FormGroup>
 
         {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
-         <Button outline color="danger" className="btn btn-block mb-3" onClick={() => { push('/') }} disabled={buttonDisabled}>Log In</Button>
+         <Button outline color="danger" className="btn btn-block mb-3" disabled={buttonDisabled}>Log In</Button>
       </Form>
     </div>
     </Wrapper>
