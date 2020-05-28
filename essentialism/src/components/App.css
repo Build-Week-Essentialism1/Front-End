@@ -3,19 +3,19 @@
 }
 
 .register-title {
-  color: #e45;
+  color: #68b;
 }
 
 .register-subtitle {
-   color: #e45;
+   color: #68b;
 }
 
 .login-subtitle {
-  color: #e45;
+  color: #68b;
 }
 
 .login-title {
-  color: #e45;
+  color: #68b;
 }
 
 input[type=text], select {
@@ -53,4 +53,13 @@ input[type=email], select {
   display: flex;
   align-content: center;
   justify-items: center;
+}
+
+.jumbotron {
+  margin-bottom: 0;
+}
+
+.image {
+  max-width: 90%;
+  height: auto;
 }

@@ -133,7 +133,7 @@ function LogIn(props) {
           {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
           <Button
             outline
-            color="danger"
+            color="primary"
             className="btn btn-block mb-3"
             disabled={buttonDisabled}
           >

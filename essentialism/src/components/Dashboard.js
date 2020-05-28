@@ -10,18 +10,20 @@ function Dashboard() {
 
   return (
     <div className="text-center">
-      <Jumbotron >
-       <img id="logoImg" src="https://www.verbaltovisual.com/wp-content/uploads/2018/11/Essentialism_Featured_2-1050x591.jpg" alt="Essentialism logo" id="logo" />
+      <Jumbotron className="mb-0">
+       <img id="logoImg" src="https://www.verbaltovisual.com/wp-content/uploads/2018/11/Essentialism_Featured_2-1050x591.jpg" alt="Essentialism logo" className="img-fluid rounded" />
        <h2 className="display-8 py-5">
-        If there's one thing you should take from this app,
+        <em>"If there's one thing you should take from this app,
       
         remember, whatever challenge you face in life,
        
-        If you don't prioritize yourself, someone else will.
+        if you don't prioritize yourself, someone else will."
+        </em>
       </h2>
+      <h4><cite>-Greg McKeown</cite></h4>
       <br />
 
-      <ReactPlayer className="mx-auto"
+      <ReactPlayer className="mx-auto img-fluid"
         url="https://youtu.be/eDBYci4Vy2k" 
         />
      
