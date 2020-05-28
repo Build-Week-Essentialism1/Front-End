@@ -8,21 +8,27 @@ import { useHistory } from "react-router-dom";
 // add an input text where you can add to the values list.
 //adding comment
 
-// const value = useContext(EssentialismContext);
 
 function ValueList(props) {
+ 
+  
   const value = {
-    item: "",
+     item: "",
   };
 
-  // const [essentials, setEssentials] = useState([]);
+
+// function ValueList(props) {
+//   const [value, setValue] = useState({
+//     item: "",
+//   };
+
   const [editing, setEditing] = useState(false);
   const [valueToEdit, setValueToEdit] = useState(value);
   const [realValue, setRealValue] = useState(value);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
+//   const [essentials, setEssentials] = useState([]);
+
+  const [prioritizedValues, setPrioritizedValues] = useState([])
 
   // handleChange
   const handleChange = (event) => {
@@ -37,6 +43,32 @@ function ValueList(props) {
 
   const history = useHistory();
 
+
+  // prioritized function
+
+  const prioritize = id => event => {
+    setPrioritizedValues(prioritizedValues.concat(id))
+
+
+    // needs user id interperlated at the end for post request to occur
+
+    axiosWithAuth()
+      .post(`https://essentialismapi.herokuapp.com/api/uv/:id`, prioritizedValues)
+      .then((res) => {
+        console.log(res);
+        history.go(0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  };
+  
+
+
   //add button
   const Add = (e) => {
     // e.preventDefault();
@@ -44,7 +76,6 @@ function ValueList(props) {
       name: realValue.item,
     };
     setRealValue({ ...realValue, newValue });
-
     axiosWithAuth()
       .post(`https://essentialismapi.herokuapp.com/api/values`, newValue)
       .then((res) => {
@@ -82,6 +113,7 @@ function ValueList(props) {
       });
   };
 
+
   return (
     <div>
       <h2>Values to Focus On</h2>
@@ -93,15 +125,17 @@ function ValueList(props) {
           name="value"
           onChange={handleChange}
           value={realValue.item}
+
         />
         <button onClick={() => Add()}>Add New Value</button>
       </form>
       <ul>
+
         {props.value.map((value) => {
           return (
             <li key={value.id}>
               <span>{value.name}</span>
-              <button>+</button>
+              <button onClick={prioritize(value.id)}>+</button>
               <button
                 onClick={() => {
                   editValue(value);
@@ -115,9 +149,10 @@ function ValueList(props) {
                   Delete(value);
                 }}
               >
-                {" "}
-                X{" "}
+                
+                X
               </button>
+
             </li>
           );
         })}
@@ -143,8 +178,22 @@ function ValueList(props) {
           </div>
         </form>
       )}
+
+      {prioritizedValues.map(id => {
+        
+        const theValue = props.value.find(v => v.id === id)
+        return (
+          <div>{theValue.name}</div>
+        )
+      })}
+
     </div>
   );
 }
-
 export default ValueList;
+
+
+
+
+
+

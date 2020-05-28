@@ -9,8 +9,11 @@ import { Provider } from "react-redux";
 // import logger from "redux-logger";
 import thunk from "redux-thunk";
 import { reducer } from "./reducers/reducer";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const store = createStore(reducer, applyMiddleware(thunk));
+
 
 ReactDOM.render(
   <Provider store={store}>

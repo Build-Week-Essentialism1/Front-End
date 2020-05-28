@@ -4,6 +4,19 @@ import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { userLogin } from "../actions/LoginAction";
+import styled from "styled-components";
+import { Button, Form, FormGroup, } from 'reactstrap';
+
+const Wrapper = styled.div`
+  background-color: #e9e9e9;
+  border: 0.5px solid black;
+  color: #000000;
+  border-radius: 10px;
+  display: flex;
+  margin: 1em 2em;
+  align-content: center;
+  justify-content: space-around;
+`;
 
 const initialLogInValues = {
   username: "",
@@ -44,6 +57,7 @@ function LogIn(props) {
     });
   }, [formState]);
 
+
   // validation function
 
   const validateChange = (e) => {
@@ -51,12 +65,16 @@ function LogIn(props) {
       .reach(formSchema, e.target.name)
       .validate(e.target.value)
       .then((valid) => {
+
+      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)      
+      .then(valid => {
         setFormErrors({
           ...formErrors,
           [e.target.name]: "",
-        });
+        });        
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log("Validate", err)
         setFormErrors({
           ...formErrors,
           [e.target.name]: err.errors[0],
@@ -69,26 +87,21 @@ function LogIn(props) {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-  // const LoginSubmit = (e) => {
-  //   e.preventDefault();
-  // axiosWithAuth()
-  //   .post("https://essentialismapi.herokuapp.com/api/users/login", user)
-  //   .then((res) => {
-  //     console.log(res.data);
-  // localStorage.setItem("token", res.data.token);
-  // props.userLogin(user);
-  // push("/dashboard")
-  // setUser(res.data);
-  // console.log("success", user);
-  // setFormState(initialLogInValues);
 
-  // })
+  // form validation useEffect
+  useEffect(() => {
+    formSchema.isValid(user).then(valid => {
+      setButtonDisabled(!valid)
+    });
+  }, [user]);
 
-  // .catch((err) => console.log(err, "It went wrong"));
-  // };
+
   return (
+    <Wrapper>
     <div className="login">
-      <h1>Log In</h1>
+      <h1 className="login-title">Essentialism</h1>
+          <h2 className="login-subtitle text-left ml-1"><em>Do More, With Less</em></h2>
+
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -96,31 +109,36 @@ function LogIn(props) {
           push("/dashboard");
         }}
       >
-        <div>
-          <label htmlFor="username">Username: </label>
+        
+
+      
+        <FormGroup>
+          <label htmlFor="username"></label>
           <input
             type="text"
             name="username"
             placeholder="username"
             value={user.username}
-            onChange={handleChange}
+            onChange={inputChange}
           />
-        </div>
+        </FormGroup>
 
-        <div>
-          <label htmlFor="password">Password: </label>
+        <FormGroup>
+          <label htmlFor="password"></label>
           <input
-            type="text"
+            type="password"
             name="password"
             placeholder="password"
             value={user.password}
-            onChange={handleChange}
+            onChange={inputChange}
           />
-        </div>
+        </FormGroup>
 
-        <button>Submit</button>
-      </form>
+        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+         <Button outline color="danger" className="btn btn-block mb-3"  disabled={buttonDisabled}>Log In</Button>
+      </Form>
     </div>
+    </Wrapper>
   );
 }
 

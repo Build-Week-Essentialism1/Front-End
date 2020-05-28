@@ -4,6 +4,7 @@ import ValueList from "../components/ValueList";
 import CardComponent from "../components/CardComponent";
 import { connect } from "react-redux";
 
+
 function Essentialism() {
   const [value, setValue] = useState([]);
 
@@ -26,6 +27,7 @@ function Essentialism() {
       Actuall App
       <ValueList value={value} />
       <CardComponent />
+
     </div>
   );
 }
