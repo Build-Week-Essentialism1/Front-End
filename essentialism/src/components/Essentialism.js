@@ -1,10 +1,9 @@
-import React, { useState, useEffect, createContext } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import ValueList from "../components/ValueList";
 import CardComponent from "../components/CardComponent";
+import { connect } from "react-redux";
 
-// const EssentialismContext = createContext();
 
 function Essentialism() {
   const [value, setValue] = useState([]);
@@ -26,10 +25,8 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-      {/* <EssentialismContext.Provider value={value}> */}
-        <ValueList value={value} />
-        <CardComponent />
-      {/* </EssentialismContext.Provider> */}
+      <ValueList value={value} />
+      <CardComponent />
 
     </div>
   );
