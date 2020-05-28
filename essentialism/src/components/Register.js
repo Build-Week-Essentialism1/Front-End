@@ -118,7 +118,7 @@ function Register() {
     <div className="register">
       
       <h1 className="register-title">Essentialism</h1>
-      <h2 className="register-subtitle">Do More, With Less</h2>
+      <h2 className="register-subtitle"><em>Do More, With Less</em></h2>
       <Form onSubmit={RegisterSubmit}>
         <FormGroup>
           <label htmlFor="username"></label>
@@ -154,7 +154,7 @@ function Register() {
             onChange={handleSignChange}
           />
         </FormGroup>
-         <Button outline color="danger" className="submit-btn mb-2" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
+         <Button outline color="danger" className="btn btn-block mb-3" onClick={() => { push('/') }} disabled={buttonDisabled}>Register</Button>
         </Form>
       
     </div>

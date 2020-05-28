@@ -118,7 +118,7 @@ function LogIn() {
     <Wrapper>
     <div className="login">
       <h1 className="login-title">Essentialism</h1>
-      <h2 className="login-subtitle text-center mr-4">Log In</h2>
+      <h2 className="login-subtitle text-left ml-1"><em>Do More, With Less</em></h2>
       <Form onSubmit={LoginSubmit}>
         <FormGroup>
           <label htmlFor="username"></label>
@@ -143,7 +143,7 @@ function LogIn() {
         </FormGroup>
 
         {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
-         <Button outline color="danger" className="submit-btn mb-2" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
+         <Button outline color="danger" className="btn btn-block mb-3" onClick={() => { push('/') }} disabled={buttonDisabled}>Log In</Button>
       </Form>
     </div>
     </Wrapper>
