@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { userLogin } from "../actions/LoginAction";
 import styled from "styled-components";
-import { Button, Form, FormGroup, } from 'reactstrap';
+import { Button, Form, FormGroup } from "reactstrap";
 
 const Wrapper = styled.div`
   background-color: #e9e9e9;
@@ -57,24 +57,23 @@ function LogIn(props) {
     });
   }, [formState]);
 
-
   // validation function
 
   const validateChange = (e) => {
     yup
       .reach(formSchema, e.target.name)
-      .validate(e.target.value)
-      .then((valid) => {
+      .validate(
+        e.target.type === "checkbox" ? e.target.checked : e.target.value
+      )
 
-      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)      
-      .then(valid => {
+      .then((valid) => {
         setFormErrors({
           ...formErrors,
           [e.target.name]: "",
-        });        
+        });
       })
-      .catch(err => {
-        console.log("Validate", err)
+      .catch((err) => {
+        console.log("Validate", err);
         setFormErrors({
           ...formErrors,
           [e.target.name]: err.errors[0],
@@ -87,57 +86,61 @@ function LogIn(props) {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
 
-
   // form validation useEffect
   useEffect(() => {
-    formSchema.isValid(user).then(valid => {
-      setButtonDisabled(!valid)
+    formSchema.isValid(user).then((valid) => {
+      setButtonDisabled(!valid);
     });
   }, [user]);
 
-
   return (
     <Wrapper>
-    <div className="login">
-      <h1 className="login-title">Essentialism</h1>
-          <h2 className="login-subtitle text-left ml-1"><em>Do More, With Less</em></h2>
+      <div className="login">
+        <h1 className="login-title">Essentialism</h1>
+        <h2 className="login-subtitle text-left ml-1">
+          <em>Do More, With Less</em>
+        </h2>
 
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          props.userLogin(user);
-          push("/dashboard");
-        }}
-      >
-        
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            props.userLogin(user);
+            push("/dashboard");
+          }}
+        >
+          <FormGroup>
+            <label htmlFor="username"></label>
+            <input
+              type="text"
+              name="username"
+              placeholder="username"
+              value={user.username}
+              onChange={handleChange}
+            />
+          </FormGroup>
 
-      
-        <FormGroup>
-          <label htmlFor="username"></label>
-          <input
-            type="text"
-            name="username"
-            placeholder="username"
-            value={user.username}
-            onChange={inputChange}
-          />
-        </FormGroup>
+          <FormGroup>
+            <label htmlFor="password"></label>
+            <input
+              type="password"
+              name="password"
+              placeholder="password"
+              value={user.password}
+              onChange={handleChange}
+            />
+          </FormGroup>
 
-        <FormGroup>
-          <label htmlFor="password"></label>
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            value={user.password}
-            onChange={inputChange}
-          />
-        </FormGroup>
-
-        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
-         <Button outline color="danger" className="btn btn-block mb-3"  disabled={buttonDisabled}>Log In</Button>
-      </Form>
-    </div>
+          {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+          <Button
+            outline
+            color="danger"
+            className="btn btn-block mb-3"
+            disabled={buttonDisabled}
+          >
+            Log In
+          </Button>
+        </form>
+      </div>
     </Wrapper>
   );
 }
