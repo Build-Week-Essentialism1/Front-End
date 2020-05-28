@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Button, Form, FormGroup, } from 'reactstrap';
 
 const Wrapper = styled.div`
-  background-color: rgba(229,35,31,0.8);
+  background-color: #e9e9e9;
   border: 0.5px solid black;
   color: #000000;
   border-radius: 10px;
@@ -117,8 +117,8 @@ function LogIn() {
   return (
     <Wrapper>
     <div className="login">
-      <h1>Essentialism</h1>
-      <h2 className="text-center mr-4">Log In</h2>
+      <h1 className="login-title">Essentialism</h1>
+      <h2 className="login-subtitle text-center mr-4">Log In</h2>
       <Form onSubmit={LoginSubmit}>
         <FormGroup>
           <label htmlFor="username"></label>
@@ -134,7 +134,7 @@ function LogIn() {
         <FormGroup>
           <label htmlFor="password"></label>
           <input
-            type="text"
+            type="password"
             name="password"
             placeholder="password"
             value={user.password}
@@ -143,7 +143,7 @@ function LogIn() {
         </FormGroup>
 
         {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
-         <Button outline color="secondary" className="submit-btn mb-2 ml-5" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
+         <Button outline color="danger" className="submit-btn mb-2" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
       </Form>
     </div>
     </Wrapper>

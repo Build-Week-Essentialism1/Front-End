@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 // add an input text where you can add to the values list.
 //adding comment
 // const value = useContext(EssentialismContext);
+
+
 function ValueList(props) {
   const [value, setValue] = useState({
     item: "",

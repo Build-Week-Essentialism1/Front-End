@@ -4,9 +4,10 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import styled from "styled-components";
 import { Button, Form, FormGroup } from 'reactstrap';
+import './App.css'
 
 const Wrapper = styled.div`
-   background-color: rgba(229,35,31,0.8);
+  background-color: #e9e9e9;
   border: 0.5px solid black;
   color: #000000;
   border-radius: 10px;
@@ -116,8 +117,8 @@ function Register() {
     <Wrapper>
     <div className="register">
       
-      <h1>Essentialism</h1>
-      <h2>Do More, With Less</h2>
+      <h1 className="register-title">Essentialism</h1>
+      <h2 className="register-subtitle">Do More, With Less</h2>
       <Form onSubmit={RegisterSubmit}>
         <FormGroup>
           <label htmlFor="username"></label>
@@ -153,7 +154,7 @@ function Register() {
             onChange={handleSignChange}
           />
         </FormGroup>
-         <Button outline color="secondary" className="submit-btn mb-2 ml-5" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
+         <Button outline color="danger" className="submit-btn mb-2" onClick={() => { push('/') }} disabled={buttonDisabled}>Submit</Button>
         </Form>
       
     </div>
