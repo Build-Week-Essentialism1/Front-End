@@ -63,7 +63,7 @@ function LogIn(props) {
   const validateChange = (e) => {
     yup
       .reach(formSchema, e.target.name)
-.validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)    
+      .validate(e.target.type === "checkbox" ? e.target.checked : e.target.value)    
 
       .then(valid => {
         setFormErrors({
@@ -117,7 +117,7 @@ function LogIn(props) {
             name="username"
             placeholder="username"
             value={user.username}
-            onChange={inputChange}
+            onChange={handleChange}
           />
         </FormGroup>
 
@@ -128,7 +128,7 @@ function LogIn(props) {
             name="password"
             placeholder="password"
             value={user.password}
-            onChange={inputChange}
+            onChange={handleChange}
           />
         </FormGroup>
 
