@@ -8,7 +8,7 @@ export const axiosWithAuth = () => {
     headers: {
       Authorization: token,
     },
-    baseURL: "https://localhost3000",
+    baseURL: "https://front-end-ecugp5cl3.now.sh/",
   });
 };
 
