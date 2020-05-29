@@ -116,13 +116,12 @@ function ValueList(props) {
   };
 
   return (
-    <div>
-      <h2>Values to Focus On</h2>
-
+    <>
       <form onSubmit={Add}>
         <input
+          id="custom-val"
           type="text"
-          placeholder="Add a Value"
+          placeholder="Add a Custom Value"
           name="value"
           onChange={handleChange}
           value={realValue.item}
@@ -181,7 +180,7 @@ function ValueList(props) {
         return <div>{theValue.name}</div>;
       })}
       
-    </div>
+    </>
   );
 }
 // const mapStateToProps = (state) => {

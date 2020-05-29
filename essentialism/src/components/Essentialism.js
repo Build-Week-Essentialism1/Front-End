@@ -7,6 +7,8 @@ import { fetchValues } from "../actions/LoginAction";
 
 
 
+
+
 function Essentialism() {
   
   const user = useSelector(state => state.user)
@@ -26,9 +28,10 @@ function Essentialism() {
 
   return (
     <div>
-      Actuall App
-      <ValueList values={values} user={user} dispatch={dispatch} />
-      <CardComponent />
+      <h2 style={{"color": "#f56"}}>Select Values to Focus on Today!</h2>
+      <ValueList values={values} user={user} dispatch={dispatch}>
+        <CardComponent />
+      </ValueList>
 
     </div>
   );
