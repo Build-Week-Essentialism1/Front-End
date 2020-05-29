@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 function CardComponent(props) {
   const [priorities, setPriorities] = useState([])
+  console.log(priorities)
   axiosWithAuth()
     .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
     .then(res => {
@@ -14,9 +15,7 @@ function CardComponent(props) {
 
   return (
     <div>
-      {/* {props.values.map(value => {
-
-      })} */}
+      <p>Card component testing</p>
     </div>
   );
 }
@@ -26,7 +25,8 @@ const mapStateToProps = (state) => {
   console.log({ state });
   return {
     user: state.user,
+    values: state.values
   };
 };
 export default connect(mapStateToProps)(CardComponent);
-// export default CardComponent;
+

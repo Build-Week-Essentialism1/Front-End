@@ -20,16 +20,6 @@ function ValueList(props) {
 
   console.log(props)
 
-  // Potential To do
-  // set props.value = variable
-  // loop over each item
-  // if id === id add that value to a list [arrary?]
-  // set new array = to variable
-  // pass variable{data} as a property to new componenet 
-  // render the data in the new components JSX
-
-
-
   const [editing, setEditing] = useState(false);
   const [valueToEdit, setValueToEdit] = useState();
   const [realValue, setRealValue] = useState(initialValue);
