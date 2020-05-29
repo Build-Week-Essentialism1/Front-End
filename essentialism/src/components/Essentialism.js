@@ -1,21 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import ValueList from "../components/ValueList";
 import CardComponent from "../components/CardComponent";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchValues } from "../actions/LoginAction";
+
 
 
 function Essentialism() {
-  const [value, setValue] = useState([]);
+  
+  const user = useSelector(state => state.user)
+  const values = useSelector(state => state.values)
+  const dispatch = useDispatch()
+  console.log(user)
+
 
   const getValues = () => {
     // eventuall I have to get the endpoint and get the values from there
-    axiosWithAuth()
-      .get("https://essentialismapi.herokuapp.com/api/values")
-      .then((res) => {
-        console.log(res.data);
-        setValue(res.data);
-      });
+   dispatch(fetchValues());
   };
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function Essentialism() {
   return (
     <div>
       Actuall App
-      <ValueList value={value} />
+      <ValueList values={values} user={user} dispatch={dispatch} />
       <CardComponent />
 
     </div>

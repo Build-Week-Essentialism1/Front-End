@@ -11,3 +11,26 @@ export const userLogin = (logInData) => {
       });
   };
 };
+
+export const fetchValues = _ => dispatch => {
+  dispatch({ type: "FETCH_VALUES_START"});
+  axiosWithAuth()
+      .get("https://essentialismapi.herokuapp.com/api/values")
+      .then((res) => {
+        console.log(res.data);
+        dispatch({ type: "FETCH_VALUES_SUCCESS", payload: res.data });
+      });
+};
+
+export const addValue = value => dispatch => {
+  dispatch({ type: "ADD_VALUE_START"});
+  axiosWithAuth()
+      .post(`https://essentialismapi.herokuapp.com/api/values`, value)
+      .then((res) => {
+        console.log(res);
+        // history.go(0);
+        dispatch({ type: "ADD_VALUE_SUCCESS", payload: res.data });
+      })
+}
+  
+

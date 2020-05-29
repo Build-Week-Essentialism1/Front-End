@@ -29,7 +29,7 @@ function Dashboard() {
      
       {/* onCLick go to ValueList plus Card */}
 
-      <Button outline color="primary" className="btn btn-lg text-center mt-5" onClick={() => push("essentialism")}>
+      <Button outline color="dark" className="btn btn-lg text-center mt-5" onClick={() => push("essentialism")}>
         Go To App
       </Button>
     </Jumbotron>

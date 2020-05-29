@@ -154,7 +154,7 @@ function Register() {
             onChange={handleSignChange}
           />
         </FormGroup>
-         <Button outline color="primary" className="btn btn-block mb-3" disabled={buttonDisabled}>Register</Button>
+         <Button outline color="dark" className="btn btn-block mb-3" disabled={buttonDisabled}>Register</Button>
         </Form>
       
     </div>
