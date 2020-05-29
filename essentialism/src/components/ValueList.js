@@ -75,7 +75,7 @@ function ValueList(props) {
         console.log(err);
       })
 };
-    // needs user id interperlated at the end for post request to occur
+
 
 
   //add button
@@ -95,7 +95,7 @@ function ValueList(props) {
       .delete(`https://essentialismapi.herokuapp.com/api/values/${value.id}`)
       .then((res) => {
         console.log(res.data);
-        // history.go(0);
+        history.go(0);
       });
   };
 
