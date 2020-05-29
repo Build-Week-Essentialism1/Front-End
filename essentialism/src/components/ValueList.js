@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { addValue } from "../actions/LoginAction";
+import CardComponent from "./CardComponent";
 
 // import axios and use endpoint to populate values
 // box of suggestions
 // add an input text where you can add to the values list.
 //adding comment
 
+const initialValue = {
+  item: "",
+};
+
 function ValueList(props) {
-  const value = {
-    item: "",
-  };
-  console.log(props.user);
-  console.log(props.user.user.id);
+  // console.log(props);
 
   const [editing, setEditing] = useState(false);
-  const [valueToEdit, setValueToEdit] = useState(value);
-  const [realValue, setRealValue] = useState(value);
+  const [valueToEdit, setValueToEdit] = useState();
+  const [realValue, setRealValue] = useState(initialValue);
+  const [cardValue, setCardValue] = useState([]);
+
   const [prioritizedValues, setPrioritizedValues] = useState([]);
 
   // handleChange
@@ -35,45 +39,37 @@ function ValueList(props) {
 
   // prioritized function
 
-  const prioritize = (id) => (event) => {
-    setPrioritizedValues(prioritizedValues.concat(id));
-
-    // needs user id interperlated at the end for post request to occur
-
+  const prioritize = (value_id) => (e) => {
+    const addPriorityValue = { value_id };
+    // setPrioritizedValues(prioritizedValues.concat(value_id));
     axiosWithAuth()
       .post(
         `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`,
-        prioritizedValues
+        addPriorityValue
       )
       .then((res) => {
-        console.log(res);
-        history.go(0);
+        axiosWithAuth()
+          .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
+          .then((res) => {
+            console.log(res.data, "Get request data");
+            setCardValue(res.data);
+          });
       })
+
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
   };
 
   //add button
   const Add = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const newValue = {
       name: realValue.item,
     };
+    console.log(newValue);
     setRealValue({ ...realValue, newValue });
-    axiosWithAuth()
-      .post(`https://essentialismapi.herokuapp.com/api/values`, newValue)
-      .then((res) => {
-        console.log(res);
-        history.go(0);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    props.dispatch(addValue(newValue));
   };
 
   //deleteValue
@@ -103,25 +99,28 @@ function ValueList(props) {
   };
 
   return (
-    <div>
-      <h2>Values to Focus On</h2>
-
-      <form onSubmit={handleSubmit}>
+    <>
+      <form onSubmit={Add}>
         <input
+          id="custom-val"
           type="text"
-          placeholder="Add a Value"
+          placeholder="Add a Custom Value"
           name="value"
           onChange={handleChange}
           value={realValue.item}
         />
-        <button onClick={() => Add()}>Add New Value</button>
+        <button>Add New Value</button>
       </form>
+
+      {/* Plus button to prioritize value */}
       <ul>
-        {props.value.map((value) => {
+        {props.values.map((value) => {
           return (
             <li key={value.id}>
               <span>{value.name}</span>
               <button onClick={prioritize(value.id)}>+</button>
+
+              {/* Edit value button */}
               <button
                 onClick={() => {
                   editValue(value);
@@ -129,6 +128,7 @@ function ValueList(props) {
               >
                 Edit
               </button>
+              {/* Delete value button */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -164,16 +164,18 @@ function ValueList(props) {
       )}
 
       {prioritizedValues.map((id) => {
-        const theValue = props.value.find((v) => v.id === id);
+        const theValue = props.values.find((v) => v.id === id);
         return <div>{theValue.name}</div>;
       })}
-    </div>
+    </>
   );
 }
-const mapStateToProps = (state) => {
-  console.log({ state });
-  return {
-    user: state,
-  };
-};
-export default connect(mapStateToProps)(ValueList);
+// const mapStateToProps = (state) => {
+//   console.log({ state });
+//   return {
+//     user: state.user,
+//   };
+// };
+// export default connect(mapStateToProps)(ValueList);
+
+export default ValueList;

@@ -11,7 +11,7 @@ function Dashboard() {
   return (
     <div className="text-center">
       <Jumbotron className="mb-0">
-       <img id="logoImg" src="https://www.verbaltovisual.com/wp-content/uploads/2018/11/Essentialism_Featured_2-1050x591.jpg" alt="Essentialism logo" className="img-fluid rounded" />
+       <img id="logoImg" src="https://www.verbaltovisual.com/wp-content/uploads/2018/11/Essentialism_Featured_2-1050x591.jpg" alt="Essentialism logo" className="img-fluid rounded ml-5" />
        <h2 className="display-8 py-5">
         <em>"If there's one thing you should take from this app,
       
@@ -29,7 +29,7 @@ function Dashboard() {
      
       {/* onCLick go to ValueList plus Card */}
 
-      <Button outline color="primary" className="btn btn-lg text-center mt-5" onClick={() => push("essentialism")}>
+      <Button outline color="danger" className="btn btn-lg text-center mt-5" onClick={() => push("essentialism")}>
         Go To App
       </Button>
     </Jumbotron>

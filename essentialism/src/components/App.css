@@ -3,21 +3,31 @@
 }
 
 .register-title {
-  color: #68b;
+  color: #f56;
 }
 
 .register-subtitle {
-   color: #68b;
+   color: #f56;
 }
 
 .login-subtitle {
-  color: #68b;
+  color: #f56;
 }
 
 .login-title {
-  color: #68b;
+  color: #f56;
 }
 
+#custom-val {
+   
+  width: 30%;
+  padding: 12px 10px;
+  margin: 8px 4px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 input[type=text], select {
   width: 100%;
   padding: 12px 20px;
