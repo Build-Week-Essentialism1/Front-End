@@ -3,31 +3,27 @@ import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 // import { connect } from "react-redux";
 import { addValue } from "../actions/LoginAction";
+import CardComponent from "./CardComponent"; 
+import {Jumbotron, Button, ButtonGroup, Container, Row, Col } from 'reactstrap';
 
-
-// import { EssentialismContext } from "./Essentialism";
 // import axios and use endpoint to populate values
 // box of suggestions
 // add an input text where you can add to the values list.
 //adding comment
 
 const initialValue = {
-  item: ""
-}
+  item: "",
+};
 
 function ValueList(props) {
-  
-
-  console.log(props)
+  // console.log(props);
 
   const [editing, setEditing] = useState(false);
   const [valueToEdit, setValueToEdit] = useState();
   const [realValue, setRealValue] = useState(initialValue);
+  const [cardValue, setCardValue] = useState([]);
 
   const [prioritizedValues, setPrioritizedValues] = useState([]);
-
-
-  
 
   // handleChange
   const handleChange = (event) => {
@@ -44,29 +40,27 @@ function ValueList(props) {
 
   // prioritized function
 
-  const prioritize = value_id => e => {
-   const addPriorityValue = { value_id };
-    setPrioritizedValues(prioritizedValues.concat(value_id));
-     axiosWithAuth()
+  const prioritize = (value_id) => (e) => {
+    const addPriorityValue = { value_id };
+    // setPrioritizedValues(prioritizedValues.concat(value_id));
+    axiosWithAuth()
       .post(
-        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`, addPriorityValue
+        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`,
+        addPriorityValue
       )
-      .then(res => {
-       
-        console.log(res, "Post request data");
-      axiosWithAuth()
-        .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
-        .then( res => {
-          console.log(res.data, "Get request data")
-        })
+      .then((res) => {
+        axiosWithAuth()
+          .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
+          .then((res) => {
+            console.log(res.data, "Get request data");
+            setCardValue(res.data);
+          });
       })
 
       .catch((err) => {
         console.log(err);
-      })
-};
-
-
+      });
+  };
 
   //add button
   const Add = (e) => {
@@ -74,7 +68,7 @@ function ValueList(props) {
     const newValue = {
       name: realValue.item,
     };
-    console.log(newValue)
+    console.log(newValue);
     setRealValue({ ...realValue, newValue });
     props.dispatch(addValue(newValue));
   };
@@ -106,8 +100,9 @@ function ValueList(props) {
   };
 
   return (
-    <>
-      <form onSubmit={Add}>
+    <Jumbotron>
+      <h2 className="text-left ml-5" style={{ "fontStyle": "italic" }}>Select Values to Focus on Today!</h2>
+      <form className="text-left ml-5" onSubmit={Add}>
         <input
           id="custom-val"
           type="text"
@@ -116,43 +111,56 @@ function ValueList(props) {
           onChange={handleChange}
           value={realValue.item}
         />
-        <button>Add New Value</button>
+        <Button outline color="dark" className="mb-1 ml-5 py-2">Add New Value</Button>
       </form>
 
       {/* Plus button to prioritize value */}
       <ul>
         {props.values.map((value) => {
           return (
-            <li key={value.id}>
+            <Container>
+              <Row className="text-left">
+                <Col xs="6">
+                
+              <li style={{ "listStyle": "none", "fontSize": "1.5em" }} key={value.id}>
               <span>{value.name}</span>
-              <button onClick={prioritize(value.id)}>+</button>
-              
-              {/* Edit value button */}
-              <button
+                </li>
+              </Col>
+
+              <Col xs="6">
+              <ButtonGroup className="ml-5 my-2" size="sm">
+              <Button outline color="success" style={{"font-size": "22px" }} onClick={prioritize(value.id)}>+</Button>
+
+              {/* Edit value Button */}
+                <Button outline color="warning" style={{ "font-size": "16px" }}
                 onClick={() => {
                   editValue(value);
                 }}
               >
-                Edit
-              </button>
-              {/* Delete value button */}
-              <button
+                EDIT
+              </Button>
+              {/* Delete value Button */}
+                <Button outline color="danger" style={{ "font-size": "18px" }}
                 onClick={(e) => {
                   e.stopPropagation();
                   Delete(value);
                 }}
               >
                 X
-              </button>
-            </li>
+              </Button>
+              </ButtonGroup>
+            
+              </Col>
+              </Row>
+            </Container>
           );
         })}
       </ul>
       {editing && (
         <form onSubmit={saveValue}>
-          <legend>Edit Value</legend>
+          
           <label>
-            Value:
+           
             <input
               onChange={(e) =>
                 setValueToEdit({
@@ -160,7 +168,7 @@ function ValueList(props) {
                   name: e.target.value,
                 })
               }
-              placeholder={valueToEdit.item}
+              placeholder="Edit Value"
             />
           </label>
           <div>
@@ -174,8 +182,7 @@ function ValueList(props) {
         const theValue = props.values.find((v) => v.id === id);
         return <div>{theValue.name}</div>;
       })}
-      
-    </>
+    </Jumbotron>
   );
 }
 // const mapStateToProps = (state) => {
@@ -186,4 +193,4 @@ function ValueList(props) {
 // };
 // export default connect(mapStateToProps)(ValueList);
 
-export default ValueList
+export default ValueList;

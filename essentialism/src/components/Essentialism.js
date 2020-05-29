@@ -28,7 +28,6 @@ function Essentialism() {
 
   return (
     <div>
-      <h2 style={{"color": "#f56"}}>Select Values to Focus on Today!</h2>
       <ValueList values={values} user={user} dispatch={dispatch} />
       <CardComponent />
      
