@@ -3,41 +3,26 @@ import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 // import { connect } from "react-redux";
 import { addValue } from "../actions/LoginAction";
+import CardComponent from "./CardComponent";
 
-
-// import { EssentialismContext } from "./Essentialism";
 // import axios and use endpoint to populate values
 // box of suggestions
 // add an input text where you can add to the values list.
 //adding comment
 
 const initialValue = {
-  item: ""
-}
+  item: "",
+};
 
 function ValueList(props) {
-  
-
-  console.log(props)
-
-  // Potential To do
-  // set props.value = variable
-  // loop over each item
-  // if id === id add that value to a list [arrary?]
-  // set new array = to variable
-  // pass variable{data} as a property to new componenet 
-  // render the data in the new components JSX
-
-
+  // console.log(props);
 
   const [editing, setEditing] = useState(false);
   const [valueToEdit, setValueToEdit] = useState();
   const [realValue, setRealValue] = useState(initialValue);
+  const [cardValue, setCardValue] = useState([]);
 
   const [prioritizedValues, setPrioritizedValues] = useState([]);
-
-
-  
 
   // handleChange
   const handleChange = (event) => {
@@ -54,29 +39,27 @@ function ValueList(props) {
 
   // prioritized function
 
-  const prioritize = value_id => e => {
-   const addPriorityValue = { value_id };
-    setPrioritizedValues(prioritizedValues.concat(value_id));
-     axiosWithAuth()
+  const prioritize = (value_id) => (e) => {
+    const addPriorityValue = { value_id };
+    // setPrioritizedValues(prioritizedValues.concat(value_id));
+    axiosWithAuth()
       .post(
-        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`, addPriorityValue
+        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`,
+        addPriorityValue
       )
-      .then(res => {
-       
-        console.log(res, "Post request data");
-      axiosWithAuth()
-        .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
-        .then( res => {
-          console.log(res.data, "Get request data")
-        })
+      .then((res) => {
+        axiosWithAuth()
+          .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
+          .then((res) => {
+            console.log(res.data, "Get request data");
+            setCardValue(res.data);
+          });
       })
 
       .catch((err) => {
         console.log(err);
-      })
-};
-
-
+      });
+  };
 
   //add button
   const Add = (e) => {
@@ -84,7 +67,7 @@ function ValueList(props) {
     const newValue = {
       name: realValue.item,
     };
-    console.log(newValue)
+    console.log(newValue);
     setRealValue({ ...realValue, newValue });
     props.dispatch(addValue(newValue));
   };
@@ -136,7 +119,7 @@ function ValueList(props) {
             <li key={value.id}>
               <span>{value.name}</span>
               <button onClick={prioritize(value.id)}>+</button>
-              
+
               {/* Edit value button */}
               <button
                 onClick={() => {
@@ -170,7 +153,7 @@ function ValueList(props) {
                   name: e.target.value,
                 })
               }
-              placeholder={valueToEdit.item}
+              placeholder={{ valueToEdit }}
             />
           </label>
           <div>
@@ -184,7 +167,6 @@ function ValueList(props) {
         const theValue = props.values.find((v) => v.id === id);
         return <div>{theValue.name}</div>;
       })}
-      
     </>
   );
 }
@@ -196,4 +178,4 @@ function ValueList(props) {
 // };
 // export default connect(mapStateToProps)(ValueList);
 
-export default ValueList
+export default ValueList;
