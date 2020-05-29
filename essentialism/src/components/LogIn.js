@@ -98,10 +98,10 @@ function LogIn(props) {
       <div className="login">
         <h1 className="login-title">Essentialism</h1>
         <h2 className="login-subtitle text-left ml-1">
-          <em>Do More, With Less</em>
+          <em>Do Less, Be More!</em>
         </h2>
 
-        <form
+        <Form
           onSubmit={(event) => {
             event.preventDefault();
             props.userLogin(user);
@@ -133,13 +133,13 @@ function LogIn(props) {
           {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
           <Button
             outline
-            color="primary"
+            color="danger"
             className="btn btn-block mb-3"
             disabled={buttonDisabled}
           >
             Log In
           </Button>
-        </form>
+        </Form>
       </div>
     </Wrapper>
   );
