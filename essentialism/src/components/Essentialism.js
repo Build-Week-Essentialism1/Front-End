@@ -30,8 +30,9 @@ function Essentialism() {
     <div>
       <h2 style={{"color": "#f56"}}>Select Values to Focus on Today!</h2>
       <ValueList values={values} user={user} dispatch={dispatch}>
-        <CardComponent />
+       
       </ValueList>
+      <CardComponent />
 
     </div>
   );

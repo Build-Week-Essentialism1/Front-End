@@ -56,18 +56,18 @@ function ValueList(props) {
 
   const prioritize = value_id => e => {
    const addPriorityValue = { value_id };
-    // setPrioritizedValues(prioritizedValues.concat(id));
+    setPrioritizedValues(prioritizedValues.concat(value_id));
      axiosWithAuth()
       .post(
         `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`, addPriorityValue
       )
       .then(res => {
        
-        console.log(res);
+        console.log(res, "Post request data");
       axiosWithAuth()
         .get(`https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`)
         .then( res => {
-          console.log(res.data)
+          console.log(res.data, "Get request data")
         })
       })
 
@@ -128,12 +128,16 @@ function ValueList(props) {
         />
         <button>Add New Value</button>
       </form>
+
+      {/* Plus button to prioritize value */}
       <ul>
         {props.values.map((value) => {
           return (
             <li key={value.id}>
               <span>{value.name}</span>
               <button onClick={prioritize(value.id)}>+</button>
+              
+              {/* Edit value button */}
               <button
                 onClick={() => {
                   editValue(value);
@@ -141,6 +145,7 @@ function ValueList(props) {
               >
                 Edit
               </button>
+              {/* Delete value button */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
