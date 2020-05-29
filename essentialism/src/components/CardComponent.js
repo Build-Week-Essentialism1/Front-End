@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 
 function CardComponent(props) {
   const [priorities, setPriorities] = useState([]);
-  const history = useHistory();
+  const history = useHistory()
+  
 
   const getCard = (e) => {
     axiosWithAuth()
@@ -50,6 +51,7 @@ const mapStateToProps = (state) => {
   console.log({ state });
   return {
     user: state.user,
+    values: state.values
   };
 };
 export default connect(mapStateToProps)(CardComponent);

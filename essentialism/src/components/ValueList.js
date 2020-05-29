@@ -3,7 +3,8 @@ import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 // import { connect } from "react-redux";
 import { addValue } from "../actions/LoginAction";
-import CardComponent from "./CardComponent";
+import CardComponent from "./CardComponent"; 
+import {Jumbotron, Button, ButtonGroup, Container, Row, Col } from 'reactstrap';
 
 // import axios and use endpoint to populate values
 // box of suggestions
@@ -99,8 +100,9 @@ function ValueList(props) {
   };
 
   return (
-    <>
-      <form onSubmit={Add}>
+    <Jumbotron>
+      <h2 className="text-left ml-5" style={{ "fontStyle": "italic" }}>Select Values to Focus on Today!</h2>
+      <form className="text-left ml-5" onSubmit={Add}>
         <input
           id="custom-val"
           type="text"
@@ -109,43 +111,56 @@ function ValueList(props) {
           onChange={handleChange}
           value={realValue.item}
         />
-        <button>Add New Value</button>
+        <Button outline color="dark" className="mb-1 ml-5 py-2">Add New Value</Button>
       </form>
 
       {/* Plus button to prioritize value */}
       <ul>
         {props.values.map((value) => {
           return (
-            <li key={value.id}>
+            <Container>
+              <Row className="text-left">
+                <Col xs="6">
+                
+              <li style={{ "listStyle": "none", "fontSize": "1.5em" }} key={value.id}>
               <span>{value.name}</span>
-              <button onClick={prioritize(value.id)}>+</button>
+                </li>
+              </Col>
 
-              {/* Edit value button */}
-              <button
+              <Col xs="6">
+              <ButtonGroup className="ml-5 my-2" size="sm">
+              <Button outline color="success" style={{"font-size": "22px" }} onClick={prioritize(value.id)}>+</Button>
+
+              {/* Edit value Button */}
+                <Button outline color="warning" style={{ "font-size": "16px" }}
                 onClick={() => {
                   editValue(value);
                 }}
               >
-                Edit
-              </button>
-              {/* Delete value button */}
-              <button
+                EDIT
+              </Button>
+              {/* Delete value Button */}
+                <Button outline color="danger" style={{ "font-size": "18px" }}
                 onClick={(e) => {
                   e.stopPropagation();
                   Delete(value);
                 }}
               >
                 X
-              </button>
-            </li>
+              </Button>
+              </ButtonGroup>
+            
+              </Col>
+              </Row>
+            </Container>
           );
         })}
       </ul>
       {editing && (
         <form onSubmit={saveValue}>
-          <legend>Edit Value</legend>
+          
           <label>
-            Value:
+           
             <input
               onChange={(e) =>
                 setValueToEdit({
@@ -153,7 +168,8 @@ function ValueList(props) {
                   name: e.target.value,
                 })
               }
-              // placeholder={ }}
+              placeholder="Edit Value"
+
             />
           </label>
           <div>
@@ -167,7 +183,7 @@ function ValueList(props) {
         const theValue = props.values.find((v) => v.id === id);
         return <div>{theValue.name}</div>;
       })}
-    </>
+    </Jumbotron>
   );
 }
 // const mapStateToProps = (state) => {
