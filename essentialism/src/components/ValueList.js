@@ -169,6 +169,7 @@ function ValueList(props) {
                 })
               }
               placeholder="Edit Value"
+
             />
           </label>
           <div>
