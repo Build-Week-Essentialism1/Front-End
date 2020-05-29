@@ -153,7 +153,7 @@ function ValueList(props) {
                   name: e.target.value,
                 })
               }
-              placeholder={{ valueToEdit }}
+              // placeholder={ }}
             />
           </label>
           <div>
