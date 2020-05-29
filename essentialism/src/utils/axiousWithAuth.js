@@ -12,4 +12,6 @@ export const axiosWithAuth = () => {
   });
 };
 
+// https://essentialismapi.herokuapp.com
+
 // baseURL:"https://essentialismapi.herokuapp.com/api"

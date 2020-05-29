@@ -106,6 +106,7 @@ function LogIn(props) {
             event.preventDefault();
             props.userLogin(user);
             push("/dashboard");
+            // window.location.reload();
           }}
         >
           <FormGroup>

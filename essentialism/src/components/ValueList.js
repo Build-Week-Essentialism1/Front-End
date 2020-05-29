@@ -3,7 +3,6 @@ import { axiosWithAuth } from "../utils/axiousWithAuth";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
-// import { EssentialismContext } from "./Essentialism";
 // import axios and use endpoint to populate values
 // box of suggestions
 // add an input text where you can add to the values list.
@@ -13,18 +12,12 @@ function ValueList(props) {
   const value = {
     item: "",
   };
-
-  // function ValueList(props) {
-  //   const [value, setValue] = useState({
-  //     item: "",
-  //   };
+  console.log(props.user);
+  console.log(props.user.user.id);
 
   const [editing, setEditing] = useState(false);
   const [valueToEdit, setValueToEdit] = useState(value);
   const [realValue, setRealValue] = useState(value);
-
-  //   const [essentials, setEssentials] = useState([]);
-
   const [prioritizedValues, setPrioritizedValues] = useState([]);
 
   // handleChange
@@ -43,13 +36,14 @@ function ValueList(props) {
   // prioritized function
 
   const prioritize = (id) => (event) => {
-    // setPrioritizedValues(prioritizedValues.concat(id));
+    setPrioritizedValues(prioritizedValues.concat(id));
 
     // needs user id interperlated at the end for post request to occur
 
     axiosWithAuth()
       .post(
-        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`, prioritizedValues
+        `https://essentialismapi.herokuapp.com/api/uv/${props.user.id}`,
+        prioritizedValues
       )
       .then((res) => {
         console.log(res);
@@ -159,7 +153,7 @@ function ValueList(props) {
                   name: e.target.value,
                 })
               }
-              placeholder={valueToEdit.item}
+              placeholder={{ valueToEdit }}
             />
           </label>
           <div>
